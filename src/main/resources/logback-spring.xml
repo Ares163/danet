@@ -1,0 +1,73 @@
+<configuration>
+
+    <property name="FILE_LOG_PATTERN" value="[%level][%d][%X{request.ip}][%logger{64}:%line][%thread]traceId=%X{logId}||%msg%n"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>${FILE_LOG_PATTERN}</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_PATH:-.}/logs/danet.log</File>
+        <encoder>
+            <Pattern>${FILE_LOG_PATTERN}</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH:-.}/logs/${LOG_FILE}.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!--
+    <if condition='property("LOG_LEVEL").contains("DEBUG")'>
+        <then>
+
+            <logger name="org.springframework" level="ERROR" />
+            <logger name="org.mybatis" level="ERROR" />
+            <logger name="druid.sql" level="ERROR" />
+            <logger name="com.alibaba.druid" level="ERROR" />
+            <logger name="com.alibaba.druid" level="ERROR" />
+            <logger name="com.demo" level="DEBUG" />
+        </then>
+        <else>
+
+            <logger name="org.springframework" level="ERROR" />
+            <logger name="org.mybatis" level="ERROR" />
+            <logger name="druid.sql" level="ERROR" />
+            <logger name="com.alibaba.druid" level="ERROR" />
+        </else>
+    </if>
+     -->
+
+    <logger name="druid.sql" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <logger name="com.didi.godeyes.dao.mapper" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <logger name="org.apache.ibatis" level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <logger name="java.sql" level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <springProfile name="dev">
+        <root level="INFO">
+            <appender-ref ref="STDOUT" />
+            <appender-ref ref="FILE" />
+        </root>
+    </springProfile>
+    <springProfile name="online,pre,test">
+        <root level="INFO">
+            <appender-ref ref="FILE" />
+        </root>
+    </springProfile>
+
+</configuration>
