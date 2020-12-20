@@ -42,32 +42,9 @@
     </if>
      -->
 
-    <logger name="druid.sql" level="DEBUG" additivity="false">
-        <appender-ref ref="STDOUT" />
-    </logger>
-
-    <logger name="com.didi.godeyes.dao.mapper" level="DEBUG" additivity="false">
-        <appender-ref ref="STDOUT" />
-    </logger>
-
-    <logger name="org.apache.ibatis" level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="STDOUT"/>
-    </logger>
-
-    <logger name="java.sql" level="DEBUG">
-        <appender-ref ref="STDOUT"/>
-    </logger>
-
-    <springProfile name="dev">
-        <root level="INFO">
-            <appender-ref ref="STDOUT" />
-            <appender-ref ref="FILE" />
-        </root>
-    </springProfile>
-    <springProfile name="online,pre,test">
-        <root level="INFO">
-            <appender-ref ref="FILE" />
-        </root>
-    </springProfile>
+        <appender-ref ref="FILE"/>
+    </root>
 
 </configuration>

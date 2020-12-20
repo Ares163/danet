@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div>
+<ul text-align：center th:each="u: ${urlList}">
+    <li><a th:href="${u.url}" th:text="${u.name}"></a></li>
+</ul>
+</div>
+</html>
