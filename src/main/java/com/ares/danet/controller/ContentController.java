@@ -25,9 +25,23 @@ public class ContentController {
         return "content";
     }
 
+    @GetMapping("/content1")
+    public String content1(Model modelMap, @RequestParam("id") String id) {
+        String content = spiderService.content1(id);
+        modelMap.addAttribute("content", content);
+        return "content";
+    }
+
     @GetMapping("/index")
     public String index(Model modelMap) {
         List<UrlData> list = spiderService.index();
+        modelMap.addAttribute("urlList", list);
+        return "list";
+    }
+
+    @GetMapping("/index1")
+    public String index1(Model modelMap) {
+        List<UrlData> list = spiderService.index1();
         modelMap.addAttribute("urlList", list);
         return "list";
     }
